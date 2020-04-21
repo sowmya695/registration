@@ -385,8 +385,8 @@
 			<artifactId>kernel-pdfgenerator-itext</artifactId>
 			<version>${mosip.core.kernel.version}</version>
 		</dependency>
-		
-		
+
+
 	</dependencies>
 
 	<repositories>

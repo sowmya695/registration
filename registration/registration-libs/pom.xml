@@ -113,7 +113,7 @@
 				<artifactId>kernel-core</artifactId>
 				<version>${mosip.core.kernel.version}</version>
 			</dependency>
-			<!-- <dependency> <groupId>io.mosip</groupId> <artifactId>kernel-security</artifactId> 
+			<!-- <dependency> <groupId>io.mosip</groupId> <artifactId>kernel-security</artifactId>
 				<version>${project.version}</version> </dependency> -->
 			<dependency>
 				<groupId>io.mosip.kernel</groupId>

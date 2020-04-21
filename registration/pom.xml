@@ -161,7 +161,7 @@
 			</dependency>
 			<!-- <dependency> <groupId>io.mosip</groupId> <artifactId>kernel-utils</artifactId> 
 				<version>${project.version}</version> </dependency> -->
-			
+
 			<dependency>
 				<groupId>org.apache.derby</groupId>
 				<artifactId>derby</artifactId>
