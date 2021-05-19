@@ -19,11 +19,11 @@ import io.mosip.kernel.core.exception.BaseUncheckedException;
 import io.mosip.kernel.core.logger.spi.Logger;
 import io.mosip.kernel.core.util.DateUtils;
 import io.mosip.registration.processor.camel.bridge.model.Setting;
-import io.mosip.registration.processor.core.abstractverticle.WorkflowEventDTO;
+import io.mosip.registration.processor.core.abstractverticle.WorkflowInternalActionDTO;
+import io.mosip.registration.processor.core.code.WorkflowActionCode;
 import io.mosip.registration.processor.core.constant.LoggerFileConstant;
 import io.mosip.registration.processor.core.exception.util.PlatformSuccessMessages;
 import io.mosip.registration.processor.core.logger.RegProcessorLogger;
-import io.mosip.registration.processor.status.code.RegistrationStatusCode;
 import io.vertx.core.json.JsonObject;
 import net.minidev.json.JSONArray;
 
@@ -65,14 +65,14 @@ public class PauseFlowPredicate implements Predicate {
 			JSONArray jsonArray = JsonPath.read(message, setting.getMatchExpression());
 			if (Pattern.matches(setting.getFromAddress(), fromAddress)
 					&& !jsonArray.isEmpty()) {
-				WorkflowEventDTO workflowEventDTO = new WorkflowEventDTO();
+				WorkflowInternalActionDTO workflowEventDTO = new WorkflowInternalActionDTO();
 				workflowEventDTO.setResumeTimestamp(DateUtils
 						.formatToISOString(DateUtils.getUTCCurrentDateTime().plusSeconds(setting.getPauseFor())));
 				workflowEventDTO.setRid(json.getString("rid"));
 				workflowEventDTO.setDefaultResumeAction(setting.getDefaultResumeAction());
-				workflowEventDTO.setStatusCode(RegistrationStatusCode.PAUSED.toString());
+					workflowEventDTO.setActionCode(WorkflowActionCode.PACKET_FOR_PAUSED.toString());
 				workflowEventDTO.setEventTimestamp(DateUtils.formatToISOString(DateUtils.getUTCCurrentDateTime()));
-				workflowEventDTO.setStatusComment(PlatformSuccessMessages.PACKET_PAUSED_HOTLISTED.getMessage());
+					workflowEventDTO.setActionMessage(PlatformSuccessMessages.PACKET_PAUSED_HOTLISTED.getMessage());
 				workflowEventDTO.setResumeRemoveTags(setting.getResumeRemoveTags());
 		
 					exchange.getMessage().setBody(objectMapper.writeValueAsString(workflowEventDTO));

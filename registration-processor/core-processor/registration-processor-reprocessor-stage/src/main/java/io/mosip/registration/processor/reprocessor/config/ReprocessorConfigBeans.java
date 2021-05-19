@@ -14,7 +14,7 @@ import io.mosip.registration.processor.packet.storage.utils.PacketManagerService
 import io.mosip.registration.processor.reprocessor.service.WorkflowActionService;
 import io.mosip.registration.processor.reprocessor.stage.ReprocessorStage;
 import io.mosip.registration.processor.reprocessor.stage.WorkflowActionApi;
-import io.mosip.registration.processor.reprocessor.stage.WorkflowEventUpdateVerticle;
+import io.mosip.registration.processor.reprocessor.stage.WorkflowInternalActionVerticle;
 import io.mosip.registration.processor.reprocessor.util.WebSubUtil;
 import io.mosip.registration.processor.reprocessor.validator.WorkflowActionRequestValidator;
 import io.mosip.registration.processor.rest.client.service.impl.RegistrationProcessorRestClientServiceImpl;
@@ -40,8 +40,8 @@ public class ReprocessorConfigBeans {
 	}
 
 	@Bean
-	public WorkflowEventUpdateVerticle getWorkflowEventUpdateVerticle() {
-		return new WorkflowEventUpdateVerticle();
+	public WorkflowInternalActionVerticle getWorkflowEventUpdateVerticle() {
+		return new WorkflowInternalActionVerticle();
 	}
 
 	@Bean

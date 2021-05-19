@@ -22,6 +22,8 @@ public enum RegistrationStatusCode {
 
 	REPROCESS_FAILED,
 	
-	PAUSED
+	PAUSED,
+
+	PAUSED_FOR_ADDITIONAL_INFO
 
 }
