@@ -225,6 +225,7 @@ public class RegistrationStatusDao {
 		LocalDateTime timeDifference = LocalDateTime.now().minusSeconds(elapseTime);
 		List<String> statusCodes=new ArrayList<>();
 		statusCodes.add(RegistrationStatusCode.PAUSED.toString());
+		statusCodes.add(RegistrationStatusCode.PAUSED_FOR_ADDITIONAL_INFO.toString());
 		String queryStr = SELECT_DISTINCT + alias + FROM + className + EMPTY_STRING + alias + WHERE + alias
 				+ ".latestTransactionStatusCode IN :status" + EMPTY_STRING + AND + EMPTY_STRING + alias
 				+ ".regProcessRetryCount<=" + ":reprocessCount" + EMPTY_STRING + AND + EMPTY_STRING + alias
@@ -247,6 +248,7 @@ public class RegistrationStatusDao {
 		LocalDateTime timeDifference = LocalDateTime.now().minusSeconds(elapseTime);
 		List<String> statusCodes=new ArrayList<>();
 		statusCodes.add(RegistrationStatusCode.PAUSED.toString());
+		statusCodes.add(RegistrationStatusCode.PAUSED_FOR_ADDITIONAL_INFO.toString());
 		String queryStr = SELECT_DISTINCT + alias + FROM + className + EMPTY_STRING + alias + WHERE + alias
 				+ ".latestTransactionStatusCode IN :status" + EMPTY_STRING + AND + EMPTY_STRING + alias
 				+ ".regProcessRetryCount<=" + ":reprocessCount" + EMPTY_STRING + AND + EMPTY_STRING + alias
@@ -314,11 +316,13 @@ public class RegistrationStatusDao {
 		
 
 		String queryStr = SELECT_DISTINCT + alias + FROM + className + EMPTY_STRING + alias + WHERE + alias
-				+ ".statusCode =:status" +  EMPTY_STRING + AND + EMPTY_STRING + alias
+				+ ".statusCode IN :statusCodes" + EMPTY_STRING + AND + EMPTY_STRING + alias
 				+ ".resumeTimeStamp < now()" + EMPTY_STRING + AND + EMPTY_STRING + alias
 				+ ".defaultResumeAction is not null" + EMPTY_STRING + ORDER_BY + EMPTY_STRING + UPDATED_DATE_TIME;
-
-		params.put("status", RegistrationStatusCode.PAUSED.toString());
+		List<String> statusCodes = new ArrayList<String>();
+		statusCodes.add( RegistrationStatusCode.PAUSED.toString());
+		statusCodes.add(RegistrationStatusCode.PAUSED_FOR_ADDITIONAL_INFO.toString());
+		params.put("statusCodes", statusCodes);
 		
 
 		return registrationStatusRepositary.createQuerySelect(queryStr, params, fetchSize);

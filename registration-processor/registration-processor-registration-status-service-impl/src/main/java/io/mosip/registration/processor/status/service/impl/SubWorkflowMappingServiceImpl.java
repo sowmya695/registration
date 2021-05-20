@@ -55,4 +55,16 @@ public class SubWorkflowMappingServiceImpl implements SubWorkflowMappingService 
 					m.getParentProcess(), m.getParentIteration())));
 		return subWorkflowDtos;
 	}
+
+	@Override
+	public List<SubWorkflowDto> getSubWorkflowMappingByRegIdAndProcess(String regId, String process) {
+		List<SubWorkflowMappingEntity> subWorkflowEntity = subWorkflowRepository
+				.workflowMappingByRegIdAndProcess(regId, process);
+		List<SubWorkflowDto> subWorkflowDtos = new ArrayList<>();
+		if (CollectionUtils.isNotEmpty(subWorkflowEntity))
+			subWorkflowEntity.forEach(m -> subWorkflowDtos
+					.add(new SubWorkflowDto(m.getId().getRegId(), m.getId().getAdditionalInfoReqId(), m.getProcess(),
+							m.getIteration(), m.getTimestamp(), m.getParentProcess(), m.getParentIteration())));
+		return subWorkflowDtos;
+	}
 }

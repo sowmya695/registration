@@ -20,7 +20,7 @@ import io.mosip.kernel.core.logger.spi.Logger;
 import io.mosip.kernel.core.util.DateUtils;
 import io.mosip.registration.processor.camel.bridge.model.Setting;
 import io.mosip.registration.processor.core.abstractverticle.WorkflowInternalActionDTO;
-import io.mosip.registration.processor.core.code.WorkflowActionCode;
+import io.mosip.registration.processor.core.code.WorkflowInternalActionCode;
 import io.mosip.registration.processor.core.constant.LoggerFileConstant;
 import io.mosip.registration.processor.core.exception.util.PlatformSuccessMessages;
 import io.mosip.registration.processor.core.logger.RegProcessorLogger;
@@ -70,7 +70,7 @@ public class PauseFlowPredicate implements Predicate {
 						.formatToISOString(DateUtils.getUTCCurrentDateTime().plusSeconds(setting.getPauseFor())));
 				workflowEventDTO.setRid(json.getString("rid"));
 				workflowEventDTO.setDefaultResumeAction(setting.getDefaultResumeAction());
-					workflowEventDTO.setActionCode(WorkflowActionCode.PACKET_FOR_PAUSED.toString());
+					workflowEventDTO.setActionCode(WorkflowInternalActionCode.PACKET_FOR_PAUSED.toString());
 				workflowEventDTO.setEventTimestamp(DateUtils.formatToISOString(DateUtils.getUTCCurrentDateTime()));
 					workflowEventDTO.setActionMessage(PlatformSuccessMessages.PACKET_PAUSED_HOTLISTED.getMessage());
 				workflowEventDTO.setResumeRemoveTags(setting.getResumeRemoveTags());

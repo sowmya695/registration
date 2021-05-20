@@ -12,6 +12,7 @@ import io.mosip.kernel.core.logger.spi.Logger;
 import io.mosip.kernel.core.util.DateUtils;
 import io.mosip.registration.processor.core.abstractverticle.WorkflowInternalActionDTO;
 import io.mosip.registration.processor.core.code.WorkflowActionCode;
+import io.mosip.registration.processor.core.code.WorkflowInternalActionCode;
 import io.mosip.registration.processor.core.constant.LoggerFileConstant;
 import io.mosip.registration.processor.core.exception.util.PlatformSuccessMessages;
 import io.mosip.registration.processor.core.logger.RegProcessorLogger;
@@ -68,7 +69,7 @@ public class WorkflowPredicate implements Predicate {
 		JsonObject json = new JsonObject(message);
 		WorkflowInternalActionDTO workflowEventDTO = new WorkflowInternalActionDTO();
 		workflowEventDTO.setRid(json.getString("rid"));
-		workflowEventDTO.setActionCode(WorkflowActionCode.RESTART_PARENT_FLOW.toString());
+		workflowEventDTO.setActionCode(WorkflowInternalActionCode.RESTART_PARENT_FLOW.toString());
 		workflowEventDTO.setActionMessage(PlatformSuccessMessages.PACKET_RESTART_PARENT_FLOW.getMessage());
 		exchange.getMessage().setBody(objectMapper.writeValueAsString(workflowEventDTO));
 	}
@@ -78,7 +79,7 @@ public class WorkflowPredicate implements Predicate {
 		JsonObject json = new JsonObject(message);
 		WorkflowInternalActionDTO workflowEventDTO = new WorkflowInternalActionDTO();
 		workflowEventDTO.setRid(json.getString("rid"));
-		workflowEventDTO.setActionCode(WorkflowActionCode.STOP_AND_NOTIFY.toString());
+		workflowEventDTO.setActionCode(WorkflowInternalActionCode.STOP_AND_NOTIFY.toString());
 		workflowEventDTO.setActionMessage(PlatformSuccessMessages.PACKET_STOP_AND_NOTIFY.getMessage());
 		exchange.getMessage().setBody(objectMapper.writeValueAsString(workflowEventDTO));
 
@@ -89,7 +90,7 @@ public class WorkflowPredicate implements Predicate {
 		JsonObject json = new JsonObject(message);
 		WorkflowInternalActionDTO workflowEventDTO = new WorkflowInternalActionDTO();
 		workflowEventDTO.setRid(json.getString("rid"));
-		workflowEventDTO.setActionCode(WorkflowActionCode.RESUME_PARENT_FLOW.toString());
+		workflowEventDTO.setActionCode(WorkflowInternalActionCode.RESUME_PARENT_FLOW.toString());
 		workflowEventDTO
 				.setActionMessage(PlatformSuccessMessages.PACKET_RESUME_PARENT_FLOW.getMessage());
 		exchange.getMessage().setBody(objectMapper.writeValueAsString(workflowEventDTO));
@@ -106,7 +107,7 @@ public class WorkflowPredicate implements Predicate {
 						DateUtils.getUTCCurrentDateTime().plusSeconds((Long) exchange.getProperty("pauseFor"))));
 		workflowEventDTO.setRid(json.getString("rid"));
 		workflowEventDTO.setDefaultResumeAction(WorkflowActionCode.STOP_PROCESSING.toString());
-		workflowEventDTO.setActionCode(WorkflowActionCode.PAUSED_FOR_ADDITIONAL_INFO.toString());
+		workflowEventDTO.setActionCode(WorkflowInternalActionCode.PAUSED_FOR_ADDITIONAL_INFO.toString());
 		workflowEventDTO.setEventTimestamp(DateUtils.formatToISOString(DateUtils.getUTCCurrentDateTime()));
 		workflowEventDTO
 				.setActionMessage(PlatformSuccessMessages.PACKET_PAUSED_FOR_ADDITIONAL_INFO.getMessage());
