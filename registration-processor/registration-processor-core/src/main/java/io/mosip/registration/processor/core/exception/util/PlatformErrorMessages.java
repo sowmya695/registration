@@ -201,6 +201,25 @@ public enum PlatformErrorMessages {
 	
 	LINK_FOR_USERID_INDIVIDUALID_FAILED_STATUS_EXCEPTION(PlatformConstants.RPR_REGISTRATION_STATUS_MODULE + "035",
 			"Unable to get the IndividualId for UserId"),
+	
+	/** The rpr pvm api resouce access failed. */
+	RPR_RGS_API_RESOUCE_ACCESS_FAILED(PlatformConstants.RPR_REGISTRATION_STATUS_MODULE + "006",
+			"Unable to Access API Resource"),
+
+	
+	RPR_RGS_DATE_TIME_EXCEPTION(PlatformConstants.RPR_REGISTRATION_STATUS_MODULE + "036",
+			"Error while parsing packet timestamp"),
+	
+	RPR_RGS_DECRYPTION_EXCEPTION(PlatformConstants.RPR_REGISTRATION_STATUS_MODULE + "037",
+			"Decryption failed"),
+	
+	RPR_RGS_UNABLE_TO_PROCESS_EXCEPTION(PlatformConstants.RPR_REGISTRATION_STATUS_MODULE + "038",
+			"Unable to process"),
+	RPR_RGS_BIOSDK_EXCEPTION(PlatformConstants.RPR_REGISTRATION_STATUS_MODULE + "039",
+			"bio sdk validation exception"),
+	
+	RPR_RGS_BIOMETRIC_SIGNATURE__VALIDATION_EXCEPTION(PlatformConstants.RPR_REGISTRATION_STATUS_MODULE + "040",
+			"biomteric signature validation exception"),
 
 	/** The rpr pis registration table not accessible. */
 	// Packet Info Storage Exception error code and message

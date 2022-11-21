@@ -15,4 +15,5 @@ public class CryptomanagerConstant {
 	public static final int GCM_AAD_LENGTH = 32;
 
 	public static final String SIGNATURES_SUCCESS = "success";
+	
 }

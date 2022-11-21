@@ -127,5 +127,55 @@ public class BioSdkUtil {
 		return mp;
 
 	}
+	public void authenticateBiometrics(String uin,
+			List<io.mosip.kernel.biometrics.entities.BIR> list,
+			String errorMsg, String errorCode) throws Exception {
+		try {
+			regProcLogger.debug("BioSdkUtil :: authenticateBiometrics :: Fetching info from id repo based on uin ");
+			boolean status = false;
+			List<Documents> docs = utilities.retrieveIdrepoDocument(uin);
+			String data = null;
+			if (null == docs || (null == list || list.size() == 0)) {
+				throw new BaseCheckedException("No document found for given user");
+			}
+
+			for (int i = 0; i < docs.size(); i++) {
+				if (docs.get(i).getCategory().equalsIgnoreCase(MappingJsonConstants.INDIVIDUAL_BIOMETRICS)) {
+					data = docs.get(i).getValue();
+					break;
+				}
+			}
+
+			if (null != data && !(data.isEmpty())) {
+				BIR bir = CbeffValidator.getBIRFromXML(CryptoUtil.decodeURLSafeBase64(data));
+				Map<BiometricType, List<BIR>> firstMp = getMapFromBirList(bir.getBirs());
+				Map<BiometricType, List<BIR>> secondMp = getMapFromBirList(list);
+				regProcLogger
+						.debug("BioSdkUtil :: authenticateBiometrics :: BIR size fetch from ID repo " + firstMp.size());
+				regProcLogger
+						.debug("BioSdkUtil :: authenticateBiometrics :: BIR size fetch from packet " + secondMp.size());
+				for (Map.Entry<BiometricType, List<BIR>> entry : secondMp.entrySet()) {
+					iBioProviderApi bioProvider = bioApiFactory
+							.getBioProvider(BiometricType.valueOf(entry.getKey().toString()), BiometricFunction.MATCH);
+					if (null == firstMp.get(entry.getKey())) {
+						status = false;
+
+					} else
+						status = bioProvider.verify(secondMp.get(entry.getKey()),firstMp.get(entry.getKey()),
+								entry.getKey(), null);
+					if (!status) {
+						throw new ValidationFailedException(errorMsg, errorCode);
+					}
+				}
+			}
+			regProcLogger.debug(
+					"BioSdkUtil :: authenticateBiometrics :: Authentication of biometrics done with status " + status);
+
+		} catch (RestClientException restEx) {
+			regProcLogger.debug(
+					"BioSdkUtil :: authenticateBiometrics :: Issue whilevalidating biometrics" + restEx.getMessage());
+			throw restEx;
+		}
+	}
 
 }
